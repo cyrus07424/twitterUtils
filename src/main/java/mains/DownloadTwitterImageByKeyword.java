@@ -35,7 +35,7 @@ public class DownloadTwitterImageByKeyword extends AbstractDownloadTwitterImage 
 				for (Status status : queryResult.getTweets()) {
 					System.out.println("status : " + status.getText());
 
-					downloadStatusImage(KEYWORD, status);
+					downloadStatusMedia(KEYWORD, status);
 				}
 
 				// 次のページが存在する場合

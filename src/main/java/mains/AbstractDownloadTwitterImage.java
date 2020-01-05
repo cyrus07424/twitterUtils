@@ -1,6 +1,11 @@
 package mains;
 
+import java.util.Arrays;
+
+import org.apache.commons.lang3.StringUtils;
+
 import twitter4j.MediaEntity;
+import twitter4j.MediaEntity.Variant;
 import twitter4j.Status;
 import utils.FileHelper;
 
@@ -12,20 +17,44 @@ import utils.FileHelper;
 public class AbstractDownloadTwitterImage {
 
 	/**
-	 * ツイートの画像を保存.
+	 * ツイートのメディアを保存.
 	 *
-	 * @param keyword
+	 * @param prefix
 	 * @param status
 	 */
-	protected static void downloadStatusImage(String keyword, Status status) {
+	protected static void downloadStatusMedia(String prefix, Status status) {
 		// 全てのメディアに対して実行
 		for (MediaEntity mediaEntity : status.getMediaEntities()) {
-			// URLを取得
-			String url = mediaEntity.getMediaURLHttps();
-			System.out.println("url : " + url);
+			// 動画の場合
+			if (mediaEntity.getVideoVariants() != null && 0 < mediaEntity.getVideoVariants().length) {
+				// 使用する動画を取得
+				int maxBitrate = 0;
+				Variant useVariant = null;
+				for (Variant variant : Arrays.asList(mediaEntity.getVideoVariants())) {
+					if (StringUtils.equals(variant.getContentType(), "video/mp4")) {
+						if (maxBitrate < variant.getBitrate()) {
+							useVariant = variant;
+						}
+					}
+				}
+				if (useVariant == null) {
+					useVariant = mediaEntity.getVideoVariants()[mediaEntity.getVideoVariants().length - 1];
+				}
 
-			// 保存
-			FileHelper.saveContent(keyword, url);
+				// URLを取得
+				String url = useVariant.getUrl();
+				System.out.println("url : " + url);
+
+				// 保存
+				FileHelper.saveContent(prefix, url);
+			} else {
+				// URLを取得
+				String url = mediaEntity.getMediaURLHttps();
+				System.out.println("url : " + url);
+
+				// 保存
+				FileHelper.saveContent(prefix, url);
+			}
 		}
 	}
 }
