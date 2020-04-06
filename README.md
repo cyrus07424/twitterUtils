@@ -1,6 +1,8 @@
-Twitter Image Downloader
+Twitter Utilities
 =========================
 
-## Run
+## Image Downloader
 
-`mains.DownloadTwitterImageByKeyword` クラスを実行
+### Run
+
+`mains.imageDownloader.DownloadTwitterImageByKeyword` クラスを実行
