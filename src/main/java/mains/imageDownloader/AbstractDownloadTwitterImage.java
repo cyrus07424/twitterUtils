@@ -1,4 +1,4 @@
-package mains;
+package mains.imageDownloader;
 
 import java.util.Arrays;
 

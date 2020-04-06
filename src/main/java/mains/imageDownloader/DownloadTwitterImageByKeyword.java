@@ -1,4 +1,4 @@
-package mains;
+package mains.imageDownloader;
 
 import twitter4j.QueryResult;
 import twitter4j.Status;
