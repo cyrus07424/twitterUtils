@@ -24,6 +24,8 @@ public class RemoveAllTweets {
 			// Twitter4jを取得
 			Twitter twitter = Twitter4jHelper.getTwitter4j();
 
+			System.out.println("■start: " + twitter.getScreenName());
+
 			// 結果が空になるまで繰り返す
 			List<Status> statusList;
 			while (!(statusList = twitter.getUserTimeline()).isEmpty()) {

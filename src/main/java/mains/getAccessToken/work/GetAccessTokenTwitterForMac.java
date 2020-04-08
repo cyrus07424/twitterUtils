@@ -1,7 +1,8 @@
-package mains.getAccessToken;
+package mains.getAccessToken.work;
 
 import java.io.IOException;
 
+import mains.getAccessToken.AbstractGetAccessToken;
 import twitter4j.TwitterException;
 
 /**

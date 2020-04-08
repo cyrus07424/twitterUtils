@@ -34,10 +34,10 @@ public class AbstractGetAccessToken {
 		while (null == accessToken) {
 			System.out.println("Open the following URL and grant access to your account:");
 			System.out.println(requestToken.getAuthorizationURL());
-			System.out.print("Enter the PIN(if aviailable) or just hit enter.[PIN]:");
+			System.out.print("Enter the PIN or oAuthVerifier(if aviailable) or just hit enter.[PIN or oAuthVerifier]:");
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
 				String pin = br.readLine();
-				if (pin.length() > 0) {
+				if (!pin.isEmpty()) {
 					accessToken = twitter.getOAuthAccessToken(requestToken, pin);
 				} else {
 					accessToken = twitter.getOAuthAccessToken();
