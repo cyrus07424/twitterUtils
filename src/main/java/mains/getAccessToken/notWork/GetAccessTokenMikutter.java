@@ -6,11 +6,11 @@ import mains.getAccessToken.AbstractGetAccessToken;
 import twitter4j.TwitterException;
 
 /**
- * Instagramのアクセストークンを取得.
+ * mikutterのアクセストークンを取得.
  *
  * @author cyrus
  */
-public class GetAccessTokenInstagram extends AbstractGetAccessToken {
+public class GetAccessTokenMikutter extends AbstractGetAccessToken {
 
 	/**
 	 * main.
@@ -20,6 +20,6 @@ public class GetAccessTokenInstagram extends AbstractGetAccessToken {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws TwitterException, IOException {
-		getAccessToken("7YBPrscvh0RIThrWYVeGg", "sMO1vDyJ9A0xfOE6RyWNjhTUS1sNqsa7Ae14gOZnw");
+		getAccessToken("AmDS1hCCXWstbss5624kVw", "KOPOooopg9Scu7gJUBHBWjwkXz9xgPJxnhnhO55VQ");
 	}
 }

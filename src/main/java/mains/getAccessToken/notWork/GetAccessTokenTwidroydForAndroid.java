@@ -6,11 +6,11 @@ import mains.getAccessToken.AbstractGetAccessToken;
 import twitter4j.TwitterException;
 
 /**
- * Silver Birdのアクセストークンを取得.
+ * Twidroyd for androidのアクセストークンを取得.
  *
  * @author cyrus
  */
-public class GetAccessTokenYoruSilverBird extends AbstractGetAccessToken {
+public class GetAccessTokenTwidroydForAndroid extends AbstractGetAccessToken {
 
 	/**
 	 * main.
@@ -20,6 +20,6 @@ public class GetAccessTokenYoruSilverBird extends AbstractGetAccessToken {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws TwitterException, IOException {
-		getAccessToken("KkrTiBu0hEMJ9dqS3YCxw", "MsuvABdvwSn2ezvdQzN4uiRR44JK8jESTIJ1hrhe0U");
+		getAccessToken("pCun0Kilhc6VF7fno2g", "3gGiWlgvMWHYy3RrFqj8jWw00kGOg9eIIqOwGiBa1c");
 	}
 }
