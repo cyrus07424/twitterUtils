@@ -2,6 +2,7 @@ package mains.imageDownloader;
 
 import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.TwitterException;
 import twitter4j.User;
 import utils.Twitter4jHelper;
 
@@ -13,9 +14,9 @@ import utils.Twitter4jHelper;
 public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterImage {
 
 	/**
-	 * 検索対象のスクリーン名.
+	 * 検索対象のスクリーン名一覧.
 	 */
-	private static String SCREEN_NAME = "CHANGE ME";
+	private static String[] SCREEN_NAME_ARRAY = { "CHANGE_ME" };
 
 	/**
 	 * main.
@@ -25,43 +26,56 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 	public static void main(String[] args) {
 		System.out.println("start");
 		try {
-			// スクリーン名で検索
-			System.out.println("searching...");
-			User user = Twitter4jHelper.getUserByScreenName(SCREEN_NAME);
-			ResponseList<Status> responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), null);
-
-			long minId = Long.MAX_VALUE;
-			while (true) {
-				System.out.println("result count : " + responseList.size());
-
-				// 全てのツイートに対して実行
-				for (Status status : responseList) {
-					System.out.println("status : " + status.getText());
-
-					// リツイートではない場合
-					if (!status.isRetweet()) {
-						// メディアをダウンロード
-						downloadStatusMedia(SCREEN_NAME, status);
-					}
-
-					if (status.getId() < minId) {
-						minId = status.getId();
-					}
-				}
-
-				// 次のページが存在する場合
-				if (!responseList.isEmpty()) {
-					// 次のページを取得
-					System.out.println("searching next page...");
-					responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), minId - 1);
-				} else {
-					// 終了
-					break;
-				}
+			// 全ての検索対象のスクリーン名に対して実行
+			for (String screenName : SCREEN_NAME_ARRAY) {
+				downloadTwitterMediaByScreenName(screenName);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("done");
+	}
+
+	/**
+	 * スクリーン名から投稿のメディアをダウンロード.
+	 *
+	 * @param screenName
+	 * @throws TwitterException
+	 */
+	private static void downloadTwitterMediaByScreenName(String screenName) throws TwitterException {
+		// スクリーン名で検索
+		System.out.println("searching...");
+		User user = Twitter4jHelper.getUserByScreenName(screenName);
+		ResponseList<Status> responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), null);
+
+		long minId = Long.MAX_VALUE;
+		while (true) {
+			System.out.println("result count : " + responseList.size());
+
+			// 全てのツイートに対して実行
+			for (Status status : responseList) {
+				System.out.println("status : " + status.getText());
+
+				// リツイートではない場合
+				if (!status.isRetweet()) {
+					// メディアをダウンロード
+					downloadStatusMedia(screenName, status);
+				}
+
+				if (status.getId() < minId) {
+					minId = status.getId();
+				}
+			}
+
+			// 次のページが存在する場合
+			if (!responseList.isEmpty()) {
+				// 次のページを取得
+				System.out.println("searching next page...");
+				responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), minId - 1);
+			} else {
+				// 終了
+				break;
+			}
+		}
 	}
 }
