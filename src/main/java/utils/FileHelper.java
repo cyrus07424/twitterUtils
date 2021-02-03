@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -14,6 +15,16 @@ import org.apache.commons.io.FilenameUtils;
  * @author cyrus
  */
 public class FileHelper {
+
+	/**
+	 * 一時ファイルを作成して取得.
+	 *
+	 * @return
+	 * @throws IOException
+	 */
+	public static File getNewTemporaryFile() throws IOException {
+		return File.createTempFile("app-", "temp");
+	}
 
 	/**
 	 * URLのデータを保存.
