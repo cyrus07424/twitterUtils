@@ -2,8 +2,8 @@ package mains.imageDownloader;
 
 import org.apache.commons.lang3.StringUtils;
 
-import twitter4j.MediaEntity;
-import twitter4j.Status;
+import twitter4j.v1.MediaEntity;
+import twitter4j.v1.Status;
 import utils.FileHelper;
 
 /**

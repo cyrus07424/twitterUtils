@@ -1,17 +1,15 @@
 package utils;
 
 import constants.Configurations;
-import twitter4j.PagableResponseList;
-import twitter4j.Paging;
-import twitter4j.Query;
-import twitter4j.QueryResult;
-import twitter4j.ResponseList;
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
-import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.v1.PagableResponseList;
+import twitter4j.v1.Paging;
+import twitter4j.v1.Query;
+import twitter4j.v1.QueryResult;
+import twitter4j.v1.ResponseList;
+import twitter4j.v1.Status;
+import twitter4j.v1.User;
 
 /**
  * Twitter4jヘルパー.
@@ -45,14 +43,11 @@ public class Twitter4jHelper {
 
 		if (twitter == null) {
 			try {
-				ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-				configurationBuilder.setDebugEnabled(true)
-						.setOAuthConsumerKey(Configurations.TWITTER_CONSUMER_KEY)
-						.setOAuthConsumerSecret(Configurations.TWITTER_CONSUMER_SECRET)
-						.setOAuthAccessToken(Configurations.TWITTER_ACCESS_TOKEN)
-						.setOAuthAccessTokenSecret(Configurations.TWITTER_ACCESS_TOKEN_SECRET);
-				TwitterFactory twitterFactory = new TwitterFactory(configurationBuilder.build());
-				twitter = twitterFactory.getInstance();
+				twitter = Twitter.newBuilder().prettyDebugEnabled(true)
+						.oAuthConsumer(Configurations.TWITTER_CONSUMER_KEY, Configurations.TWITTER_CONSUMER_SECRET)
+						.oAuthAccessToken(Configurations.TWITTER_ACCESS_TOKEN,
+								Configurations.TWITTER_ACCESS_TOKEN_SECRET)
+						.build();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -68,7 +63,7 @@ public class Twitter4jHelper {
 	 * @throws TwitterException
 	 */
 	public static User getUserByUserId(Long userId) throws TwitterException {
-		return getTwitter4j().users().showUser(userId);
+		return getTwitter4j().v1().users().showUser(userId);
 	}
 
 	/**
@@ -79,7 +74,7 @@ public class Twitter4jHelper {
 	 * @throws TwitterException
 	 */
 	public static User getUserByScreenName(String screenName) throws TwitterException {
-		return getTwitter4j().users().showUser(screenName);
+		return getTwitter4j().v1().users().showUser(screenName);
 	}
 
 	/**
@@ -90,7 +85,7 @@ public class Twitter4jHelper {
 	 * @throws TwitterException
 	 */
 	public static Status getStatusByStatusId(Long statusId) throws TwitterException {
-		return getTwitter4j().tweets().showStatus(statusId);
+		return getTwitter4j().v1().tweets().showStatus(statusId);
 	}
 
 	/**
@@ -101,7 +96,7 @@ public class Twitter4jHelper {
 	 * @throws TwitterException
 	 */
 	public static QueryResult getTimelineByQuery(Query query) throws TwitterException {
-		return getTwitter4j().search().search(query);
+		return getTwitter4j().v1().search().search(query);
 	}
 
 	/**
@@ -112,7 +107,7 @@ public class Twitter4jHelper {
 	 * @throws TwitterException
 	 */
 	public static QueryResult getTimelineByHashtag(String hashtag) throws TwitterException {
-		return getTwitter4j().search().search(new Query("#" + hashtag));
+		return getTwitter4j().v1().search().search(Query.of("#" + hashtag));
 	}
 
 	/**
@@ -123,7 +118,7 @@ public class Twitter4jHelper {
 	 * @throws TwitterException
 	 */
 	public static QueryResult getTimelineByKeyword(String keyword) throws TwitterException {
-		return getTwitter4j().search().search(new Query(keyword));
+		return getTwitter4j().v1().search().search(Query.of(keyword));
 	}
 
 	/**
@@ -136,12 +131,11 @@ public class Twitter4jHelper {
 	 * @throws TwitterException
 	 */
 	public static ResponseList<Status> getTimelineByUserId(Long userId, Long maxId) throws TwitterException {
-		Paging paging = new Paging();
-		paging.setCount(200);
+		Paging paging = Paging.ofCount(200);
 		if (maxId != null) {
-			paging.setMaxId(maxId);
+			paging = paging.maxId(maxId);
 		}
-		return getTwitter4j().timelines().getUserTimeline(userId, paging);
+		return getTwitter4j().v1().timelines().getUserTimeline(userId, paging);
 	}
 
 	/**
@@ -156,9 +150,9 @@ public class Twitter4jHelper {
 			throws TwitterException {
 		int count = 200;
 		if (cursor != null) {
-			return getTwitter4j().friendsFollowers().getFriendsList(userId, cursor, count, true, true);
+			return getTwitter4j().v1().friendsFollowers().getFriendsList(userId, cursor, count, true, true);
 		} else {
-			return getTwitter4j().friendsFollowers().getFriendsList(userId, -1, count, true, true);
+			return getTwitter4j().v1().friendsFollowers().getFriendsList(userId, -1, count, true, true);
 		}
 	}
 }

@@ -36,7 +36,7 @@ public class RemoveAllTweetsFromCsv {
 			// Twitter4jを取得
 			Twitter twitter = Twitter4jHelper.getTwitter4j();
 
-			System.out.println("■start: " + twitter.getScreenName());
+			System.out.println("■start: " + twitter.v1().users().verifyCredentials().getScreenName());
 
 			while (true) {
 				// CSVファイルから全行読み込む
@@ -59,7 +59,7 @@ public class RemoveAllTweetsFromCsv {
 
 					// ツイートを削除
 					System.out.println("delete : " + tweetId);
-					twitter.destroyStatus(tweetId);
+					twitter.v1().tweets().destroyStatus(tweetId);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

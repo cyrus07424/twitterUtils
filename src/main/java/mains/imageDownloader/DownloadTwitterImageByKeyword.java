@@ -1,7 +1,7 @@
 package mains.imageDownloader;
 
-import twitter4j.QueryResult;
-import twitter4j.Status;
+import twitter4j.v1.QueryResult;
+import twitter4j.v1.Status;
 import utils.Twitter4jHelper;
 
 /**

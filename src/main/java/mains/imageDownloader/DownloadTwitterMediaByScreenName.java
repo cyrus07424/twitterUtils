@@ -1,9 +1,9 @@
 package mains.imageDownloader;
 
-import twitter4j.ResponseList;
-import twitter4j.Status;
 import twitter4j.TwitterException;
-import twitter4j.User;
+import twitter4j.v1.ResponseList;
+import twitter4j.v1.Status;
+import twitter4j.v1.User;
 import utils.Twitter4jHelper;
 
 /**
@@ -16,7 +16,7 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 	/**
 	 * 検索対象のスクリーン名一覧.
 	 */
-	private static String[] SCREEN_NAME_ARRAY = { "CHANGE_ME" };
+	private static String[] SCREEN_NAME_ARRAY = { "CHANGE ME" };
 
 	/**
 	 * main.
