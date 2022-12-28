@@ -5,6 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orangesignal.csv.Csv;
@@ -22,12 +24,12 @@ public class ConvertLikeJsToCsv {
 	 * 入力ファイル(like.js).<br>
 	 * 先頭の「window.YTD.like.part0 = 」の部分は削除しておく.
 	 */
-	private static File INPUT_LIKE_JS_FILE = new File("like.js");
+	private static File INPUT_LIKE_JS_FILE = new File("data/like.js");
 
 	/**
 	 * 出力ファイル(CSV).
 	 */
-	private static File OUTPUT_CSV_FILE = new File("like.csv");
+	private static File OUTPUT_CSV_FILE = new File("data/like.csv");
 
 	/**
 	 * main.
@@ -64,6 +66,7 @@ public class ConvertLikeJsToCsv {
 				String text = null;
 				if (likeBody.has("fullText")) {
 					text = likeBody.get("fullText").asText();
+					text = StringUtils.deleteWhitespace(text);
 				}
 				String expandedUrl = likeBody.get("expandedUrl").asText();
 

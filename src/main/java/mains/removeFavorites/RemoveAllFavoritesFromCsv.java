@@ -24,7 +24,7 @@ public class RemoveAllFavoritesFromCsv {
 	/**
 	 * CSVファイル.
 	 */
-	private static File CSV_FILE = new File("like.csv");
+	private static File CSV_FILE = new File("data/like.csv");
 
 	/**
 	 * main.

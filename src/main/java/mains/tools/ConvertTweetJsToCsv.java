@@ -22,12 +22,12 @@ public class ConvertTweetJsToCsv {
 	 * 入力ファイル(tweet.js).<br>
 	 * 先頭の「window.YTD.tweet.part0 = 」の部分は削除しておく.
 	 */
-	private static File INPUT_TWEET_JS_FILE = new File("tweet-part1.js");
+	private static File INPUT_TWEET_JS_FILE = new File("data/tweet.js");
 
 	/**
 	 * 出力ファイル(CSV).
 	 */
-	private static File OUTPUT_CSV_FILE = new File("tweets.csv");
+	private static File OUTPUT_CSV_FILE = new File("data/tweets.csv");
 
 	/**
 	 * main.
@@ -62,7 +62,7 @@ public class ConvertTweetJsToCsv {
 				JsonNode tweetBody = tweet.get("tweet");
 				String id = tweetBody.get("id").asText();
 				String date = tweetBody.get("created_at").asText();
-				String text = tweetBody.get("full_text").asText();
+				String text = tweetBody.get("full_text").asText().replaceAll("[\r\n]", "");
 
 				// データ行を作成
 				List<String> csvRow = new ArrayList<>();

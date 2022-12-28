@@ -24,7 +24,7 @@ public class RemoveAllTweetsFromCsv {
 	/**
 	 * CSVファイル.
 	 */
-	private static File CSV_FILE = new File("tweets.csv");
+	private static File CSV_FILE = new File("data/tweets.csv");
 
 	/**
 	 * main.

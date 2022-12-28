@@ -24,7 +24,7 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("start");
+		System.out.println("■start");
 		try {
 			// 全ての検索対象のスクリーン名に対して実行
 			for (String screenName : SCREEN_NAME_ARRAY) {
@@ -33,7 +33,7 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("done");
+		System.out.println("■done");
 	}
 
 	/**
@@ -44,17 +44,17 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 	 */
 	private static void downloadTwitterMediaByScreenName(String screenName) throws TwitterException {
 		// スクリーン名で検索
-		System.out.println("searching...");
+		System.out.println("■searching : " + screenName);
 		User user = Twitter4jHelper.getUserByScreenName(screenName);
 		ResponseList<Status> responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), null);
 
 		long minId = Long.MAX_VALUE;
 		while (true) {
-			System.out.println("result count : " + responseList.size());
+			System.out.println("■result count : " + responseList.size());
 
 			// 全てのツイートに対して実行
 			for (Status status : responseList) {
-				System.out.println("status : " + status.getText());
+				System.out.println("■status : " + status.getText());
 
 				// リツイートではない場合
 				if (!status.isRetweet()) {
@@ -70,7 +70,7 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 			// 次のページが存在する場合
 			if (!responseList.isEmpty()) {
 				// 次のページを取得
-				System.out.println("searching next page...");
+				System.out.println("■searching next page...");
 				responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), minId - 1);
 			} else {
 				// 終了

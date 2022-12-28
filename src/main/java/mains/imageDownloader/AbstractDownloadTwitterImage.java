@@ -1,11 +1,8 @@
 package mains.imageDownloader;
 
-import java.util.Arrays;
-
 import org.apache.commons.lang3.StringUtils;
 
 import twitter4j.MediaEntity;
-import twitter4j.MediaEntity.Variant;
 import twitter4j.Status;
 import utils.FileHelper;
 
@@ -29,8 +26,8 @@ public class AbstractDownloadTwitterImage {
 			if (mediaEntity.getVideoVariants() != null && 0 < mediaEntity.getVideoVariants().length) {
 				// 使用する動画を取得
 				int maxBitrate = 0;
-				Variant useVariant = null;
-				for (Variant variant : Arrays.asList(mediaEntity.getVideoVariants())) {
+				MediaEntity.Variant useVariant = null;
+				for (MediaEntity.Variant variant : mediaEntity.getVideoVariants()) {
 					if (StringUtils.equals(variant.getContentType(), "video/mp4")) {
 						if (maxBitrate < variant.getBitrate()) {
 							useVariant = variant;
