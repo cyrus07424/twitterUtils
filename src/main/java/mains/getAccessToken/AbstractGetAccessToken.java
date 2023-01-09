@@ -14,7 +14,7 @@ import twitter4j.TwitterException;
  *
  * @author cyrus
  */
-public class AbstractGetAccessToken {
+public abstract class AbstractGetAccessToken {
 
 	/**
 	 * アクセストークンを取得.<br>

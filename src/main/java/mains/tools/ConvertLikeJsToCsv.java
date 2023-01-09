@@ -1,8 +1,10 @@
 package mains.tools;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -52,9 +54,6 @@ public class ConvertLikeJsToCsv {
 			headerRow.add("fullText");
 			headerRow.add("expandedUrl");
 
-			// ヘッダー行を追加
-			csvRowList.add(headerRow.toArray(new String[0]));
-
 			// 入力ファイルをJsonオブジェクトに変換
 			JsonNode likeList = getObjectMapper().readTree(INPUT_LIKE_JS_FILE);
 
@@ -80,6 +79,12 @@ public class ConvertLikeJsToCsv {
 				// データ行を追加
 				csvRowList.add(csvRow.toArray(new String[0]));
 			}
+
+			// データ行をtweetIdの昇順でソート
+			Collections.sort(csvRowList, (r1, r2) -> new BigDecimal(r1[0]).compareTo(new BigDecimal(r2[0])));
+
+			// ヘッダー行を先頭に追加
+			csvRowList.add(0, headerRow.toArray(new String[0]));
 
 			// CSVファイルを保存
 			Csv.save(csvRowList, OUTPUT_CSV_FILE, StandardCharsets.UTF_8.name(), csvConfig,

@@ -11,7 +11,7 @@ import utils.FileHelper;
  *
  * @author cyrus
  */
-public class AbstractDownloadTwitterImage {
+public abstract class AbstractDownloadTwitterImage {
 
 	/**
 	 * ツイートのメディアを保存.

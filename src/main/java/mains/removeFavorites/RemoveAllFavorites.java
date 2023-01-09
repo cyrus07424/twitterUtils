@@ -34,6 +34,7 @@ public class RemoveAllFavorites {
 					System.out.println(status);
 					try {
 						// お気に入りを削除
+						System.out.println("destroyFavorite : " + status.getId());
 						twitter.v1().favorites().destroyFavorite(status.getId());
 					} catch (TwitterException e) {
 						e.printStackTrace();

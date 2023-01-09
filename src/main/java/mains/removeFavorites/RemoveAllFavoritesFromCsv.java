@@ -57,8 +57,16 @@ public class RemoveAllFavoritesFromCsv {
 					// ツイートIDを取得
 					long tweetId = Long.parseLong(row[0]);
 
+					try {
+						// FIXME お気に入りを作成
+						System.out.println("createFavorite : " + tweetId);
+						twitter.v1().favorites().createFavorite(tweetId);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
 					// お気に入りを削除
-					System.out.println("delete : " + tweetId);
+					System.out.println("destroyFavorite : " + tweetId);
 					twitter.v1().favorites().destroyFavorite(tweetId);
 				} catch (Exception e) {
 					e.printStackTrace();

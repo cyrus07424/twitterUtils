@@ -58,7 +58,7 @@ public class RemoveAllTweetsFromCsv {
 					long tweetId = Long.parseLong(row[0]);
 
 					// ツイートを削除
-					System.out.println("delete : " + tweetId);
+					System.out.println("destroyStatus : " + tweetId);
 					twitter.v1().tweets().destroyStatus(tweetId);
 				} catch (Exception e) {
 					e.printStackTrace();

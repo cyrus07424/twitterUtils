@@ -34,6 +34,7 @@ public class RemoveAllTweets {
 					System.out.println(status);
 					try {
 						// ツイートを削除
+						System.out.println("destroyStatus : " + status.getId());
 						twitter.v1().tweets().destroyStatus(status.getId());
 					} catch (TwitterException e) {
 						e.printStackTrace();
