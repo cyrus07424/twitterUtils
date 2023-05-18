@@ -1,6 +1,8 @@
 package utils;
 
 import constants.Configurations;
+import twitter4j.OAuth2Authorization;
+import twitter4j.OAuth2Token;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.v1.PagableResponseList;
@@ -43,10 +45,44 @@ public class Twitter4jHelper {
 
 		if (twitter == null) {
 			try {
-				twitter = Twitter.newBuilder().prettyDebugEnabled(true)
+				twitter = Twitter.newBuilder()
+						.prettyDebugEnabled(true)
 						.oAuthConsumer(Configurations.TWITTER_CONSUMER_KEY, Configurations.TWITTER_CONSUMER_SECRET)
 						.oAuthAccessToken(Configurations.TWITTER_ACCESS_TOKEN,
 								Configurations.TWITTER_ACCESS_TOKEN_SECRET)
+						.build();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return twitter;
+	}
+
+	/**
+	 * Application-only authenticationでTwitter4jを取得.
+	 *
+	 * @return
+	 */
+	public static synchronized Twitter getTwitter4jAsApplicationOnlyAuth() {
+		try {
+			// FIXME ウエイト
+			Thread.sleep(WAIT_MILLIS);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (twitter == null) {
+			try {
+				// トークンを取得
+				OAuth2Authorization oAuth2Authorization = OAuth2Authorization
+						.getInstance(Configurations.TWITTER_CONSUMER_KEY, Configurations.TWITTER_CONSUMER_SECRET);
+				OAuth2Token token = oAuth2Authorization.getOAuth2Token();
+
+				twitter = Twitter.newBuilder()
+						.prettyDebugEnabled(true)
+						.applicationOnlyAuthEnabled(true)
+						.oAuthConsumer(Configurations.TWITTER_CONSUMER_KEY, Configurations.TWITTER_CONSUMER_SECRET)
+						.oAuth2Token(token)
 						.build();
 			} catch (Exception e) {
 				e.printStackTrace();
