@@ -3,11 +3,12 @@ package mains.getAccessToken;
 import java.io.IOException;
 import java.util.Scanner;
 
-import twitter4j.AccessToken;
-import twitter4j.OAuthAuthorization;
-import twitter4j.RequestToken;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.OAuthAuthorization;
+import twitter4j.auth.RequestToken;
 
 /**
  * アクセストークンを取得.
@@ -26,8 +27,9 @@ public abstract class AbstractGetAccessToken {
 	 * @throws IOException
 	 */
 	public static void getAccessToken(String consumerKey, String consumerSecret) throws TwitterException, IOException {
-		OAuthAuthorization oAuth = OAuthAuthorization.newBuilder().oAuthConsumer(consumerKey, consumerSecret).build();
-		RequestToken requestToken = oAuth.getOAuthRequestToken();
+		Twitter twitter = TwitterFactory.getSingleton();
+		twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		RequestToken requestToken = twitter.getOAuthRequestToken();
 		AccessToken accessToken = null;
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (null == accessToken) {
@@ -37,9 +39,9 @@ public abstract class AbstractGetAccessToken {
 				String pin = scanner.nextLine();
 				try {
 					if (0 < pin.length()) {
-						accessToken = oAuth.getOAuthAccessToken(requestToken, pin);
+						accessToken = twitter.getOAuthAccessToken(requestToken, pin);
 					} else {
-						accessToken = oAuth.getOAuthAccessToken();
+						accessToken = twitter.getOAuthAccessToken();
 					}
 				} catch (TwitterException te) {
 					if (401 == te.getStatusCode()) {
@@ -50,9 +52,7 @@ public abstract class AbstractGetAccessToken {
 				}
 			}
 		}
-		Twitter twitter = Twitter.newBuilder()
-				.oAuthConsumer(consumerKey, consumerSecret).oAuthAccessToken(accessToken).build();
-		System.out.println("userId:" + twitter.v1().users().verifyCredentials().getId());
+		System.out.println("userId:" + twitter.users().verifyCredentials().getId());
 		System.out.println("accessToken:" + accessToken.getToken());
 		System.out.println("tokenSecret:" + accessToken.getTokenSecret());
 	}

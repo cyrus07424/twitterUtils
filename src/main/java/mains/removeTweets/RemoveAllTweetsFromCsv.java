@@ -12,7 +12,7 @@ import com.orangesignal.csv.handlers.StringArrayListHandler;
 import twitter4j.Twitter;
 import utils.FileHelper;
 import utils.OrangeSignalHelper;
-import utils.Twitter4jHelper;
+import utils.Twitter4jV1Helper;
 
 /**
  * CSVファイルから全てのツイートを削除.
@@ -34,9 +34,9 @@ public class RemoveAllTweetsFromCsv {
 	public static void main(String[] args) {
 		try {
 			// Twitter4jを取得
-			Twitter twitter = Twitter4jHelper.getTwitter4j();
+			Twitter twitter = Twitter4jV1Helper.getTwitter4j();
 
-			System.out.println("■start: " + twitter.v1().users().verifyCredentials().getScreenName());
+			System.out.println("■start: " + twitter.users().verifyCredentials().getScreenName());
 
 			while (true) {
 				// CSVファイルから全行読み込む
@@ -59,7 +59,7 @@ public class RemoveAllTweetsFromCsv {
 
 					// ツイートを削除
 					System.out.println("destroyStatus : " + tweetId);
-					twitter.v1().tweets().destroyStatus(tweetId);
+					twitter.tweets().destroyStatus(tweetId);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

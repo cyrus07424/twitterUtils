@@ -1,10 +1,10 @@
 package mains.imageDownloader;
 
 import twitter4j.TwitterException;
-import twitter4j.v1.ResponseList;
-import twitter4j.v1.Status;
-import twitter4j.v1.User;
-import utils.Twitter4jHelper;
+import twitter4j.ResponseList;
+import twitter4j.Status;
+import twitter4j.User;
+import utils.Twitter4jV1Helper;
 
 /**
  * DownloadTwitterMediaByScreenName.
@@ -45,8 +45,8 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 	private static void downloadTwitterMediaByScreenName(String screenName) throws TwitterException {
 		// スクリーン名で検索
 		System.out.println("■searching : " + screenName);
-		User user = Twitter4jHelper.getUserByScreenName(screenName);
-		ResponseList<Status> responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), null);
+		User user = Twitter4jV1Helper.getUserByScreenName(screenName);
+		ResponseList<Status> responseList = Twitter4jV1Helper.getTimelineByUserId(user.getId(), null);
 
 		long minId = Long.MAX_VALUE;
 		while (true) {
@@ -71,7 +71,7 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 			if (!responseList.isEmpty()) {
 				// 次のページを取得
 				System.out.println("■searching next page...");
-				responseList = Twitter4jHelper.getTimelineByUserId(user.getId(), minId - 1);
+				responseList = Twitter4jV1Helper.getTimelineByUserId(user.getId(), minId - 1);
 			} else {
 				// 終了
 				break;

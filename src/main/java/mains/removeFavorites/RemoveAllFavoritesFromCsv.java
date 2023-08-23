@@ -12,7 +12,7 @@ import com.orangesignal.csv.handlers.StringArrayListHandler;
 import twitter4j.Twitter;
 import utils.FileHelper;
 import utils.OrangeSignalHelper;
-import utils.Twitter4jHelper;
+import utils.Twitter4jV1Helper;
 
 /**
  * CSVファイルから全てのお気に入りを削除.
@@ -34,9 +34,9 @@ public class RemoveAllFavoritesFromCsv {
 	public static void main(String[] args) {
 		try {
 			// Twitter4jを取得
-			Twitter twitter = Twitter4jHelper.getTwitter4j();
+			Twitter twitter = Twitter4jV1Helper.getTwitter4j();
 
-			System.out.println("■start: " + twitter.v1().users().verifyCredentials().getScreenName());
+			System.out.println("■start: " + twitter.users().verifyCredentials().getScreenName());
 
 			while (true) {
 				// CSVファイルから全行読み込む
@@ -60,14 +60,14 @@ public class RemoveAllFavoritesFromCsv {
 					try {
 						// FIXME お気に入りを作成
 						System.out.println("createFavorite : " + tweetId);
-						twitter.v1().favorites().createFavorite(tweetId);
+						twitter.favorites().createFavorite(tweetId);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 
 					// お気に入りを削除
 					System.out.println("destroyFavorite : " + tweetId);
-					twitter.v1().favorites().destroyFavorite(tweetId);
+					twitter.favorites().destroyFavorite(tweetId);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

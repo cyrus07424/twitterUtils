@@ -1,8 +1,8 @@
 package mains.imageDownloader;
 
-import twitter4j.v1.QueryResult;
-import twitter4j.v1.Status;
-import utils.Twitter4jHelper;
+import twitter4j.QueryResult;
+import twitter4j.Status;
+import utils.Twitter4jV1Helper;
 
 /**
  * DownloadTwitterImageByKeyword.
@@ -26,7 +26,7 @@ public class DownloadTwitterImageByKeyword extends AbstractDownloadTwitterImage 
 		try {
 			// ハッシュタグで検索
 			System.out.println("searching...");
-			QueryResult queryResult = Twitter4jHelper.getTimelineByKeyword(KEYWORD);
+			QueryResult queryResult = Twitter4jV1Helper.getTimelineByKeyword(KEYWORD);
 
 			while (true) {
 				System.out.println("result count : " + queryResult.getTweets().size());
@@ -42,7 +42,7 @@ public class DownloadTwitterImageByKeyword extends AbstractDownloadTwitterImage 
 				if (queryResult.hasNext()) {
 					// 次のページを取得
 					System.out.println("searching next page...");
-					queryResult = Twitter4jHelper.getTimelineByQuery(queryResult.nextQuery());
+					queryResult = Twitter4jV1Helper.getTimelineByQuery(queryResult.nextQuery());
 				} else {
 					// 終了
 					break;
