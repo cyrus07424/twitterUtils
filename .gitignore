@@ -1,4 +1,6 @@
-/downloads/
+/.project
+/.classpath
+/.settings/
 /target/
 /data/
-/.sts4-cache
+/downloads/

@@ -7,14 +7,14 @@ import twitter4j.UsersResponse;
 import twitter4j.V2DefaultFields;
 
 /**
- * Twitter4jヘルパー(V2).
+ * Twitter4Jヘルパー(V2).
  *
  * @author cyrus
  */
 public class Twitter4jV2Helper {
 
 	/**
-	 * Twitter4j(V2).
+	 * Twitter4J(V2).
 	 */
 	private static TwitterV2 twitterV2;
 
@@ -24,7 +24,7 @@ public class Twitter4jV2Helper {
 	private static final long WAIT_MILLIS = 5000;
 
 	/**
-	 * Twitter4j(V2)を取得.
+	 * Twitter4J(V2)を取得.
 	 *
 	 * @return
 	 */

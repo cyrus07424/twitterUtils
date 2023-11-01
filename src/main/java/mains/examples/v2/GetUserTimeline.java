@@ -23,7 +23,7 @@ public class GetUserTimeline {
 	 */
 	public static void main(String[] args) {
 		try {
-			// Twitter4j(V2)を取得
+			// Twitter4J(V2)を取得
 			TwitterV2 twitterV2 = Twitter4jV2Helper.getTwitter4jV2();
 
 			// 自分の情報を取得

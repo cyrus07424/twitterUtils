@@ -33,7 +33,7 @@ public class RemoveAllFavoritesFromCsv {
 	 */
 	public static void main(String[] args) {
 		try {
-			// Twitter4jを取得
+			// Twitter4Jを取得
 			Twitter twitter = Twitter4jV1Helper.getTwitter4j();
 
 			System.out.println("■start: " + twitter.users().verifyCredentials().getScreenName());

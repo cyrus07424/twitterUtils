@@ -14,14 +14,14 @@ import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
- * Twitter4jヘルパー(V1).
+ * Twitter4Jヘルパー(V1).
  *
  * @author cyrus
  */
 public class Twitter4jV1Helper {
 
 	/**
-	 * Twitter4j.
+	 * Twitter4J.
 	 */
 	private static Twitter twitter;
 
@@ -31,7 +31,7 @@ public class Twitter4jV1Helper {
 	private static final long WAIT_MILLIS = 5000;
 
 	/**
-	 * Twitter4jを取得.
+	 * Twitter4Jを取得.
 	 *
 	 * @return
 	 */
