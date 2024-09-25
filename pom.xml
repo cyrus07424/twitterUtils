@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>io.github.takke</groupId>
 			<artifactId>jp.takke.twitter4j-v2</artifactId>
-			<version>1.4.3</version>
+			<version>1.4.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
