@@ -1,5 +1,7 @@
 package mains.imageDownloader;
 
+import org.apache.commons.lang3.StringUtils;
+
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.TwitterException;
@@ -28,7 +30,9 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 		try {
 			// 全ての検索対象のスクリーン名に対して実行
 			for (String screenName : SCREEN_NAME_ARRAY) {
-				downloadTwitterMediaByScreenName(screenName);
+				if (StringUtils.isNotBlank(screenName)) {
+					downloadTwitterMediaByScreenName(screenName);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
