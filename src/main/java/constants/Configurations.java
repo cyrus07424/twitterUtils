@@ -21,6 +21,10 @@ public interface Configurations {
 
 	String TWITTER_ACCESS_TOKEN_SECRET = "CHANGE ME";
 
+	String TWITTER_CLIENT_ID = "CHANGE ME";
+
+	String TWITTER_CLIENT_SECRET = "CHANGE ME";
+
 	/**
 	 * ブラウザをヘッドレスモードで使用するか.
 	 */
