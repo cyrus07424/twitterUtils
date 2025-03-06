@@ -3,18 +3,17 @@ package mains.examples.v1;
 import java.util.List;
 
 import mains.examples.AbstractExample;
-import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import utils.Twitter4jV1Helper;
 
 /**
- * ユーザーのタイムラインを取得.
+ * ユーザーのメンションを取得.
  *
  * @author cyrus
  */
-public class GetUserTimeline extends AbstractExample {
+public class GetMentionsTimeline extends AbstractExample {
 
 	/**
 	 * main.
@@ -29,9 +28,8 @@ public class GetUserTimeline extends AbstractExample {
 			// 認証されたユーザー情報を出力
 			dumpTwitterUsers(twitter);
 
-			// ユーザーのタイムラインを取得
-			Paging paging = new Paging().count(1);
-			List<Status> statusList = twitter.timelines().getUserTimeline(paging);
+			// ユーザーのメンションを取得
+			List<Status> statusList = twitter.timelines().getMentionsTimeline();
 			System.out.println("■statusList: " + statusList);
 
 			// 全てのツイートに対して実行

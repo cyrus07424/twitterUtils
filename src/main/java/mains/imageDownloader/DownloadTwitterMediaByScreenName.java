@@ -2,11 +2,13 @@ package mains.imageDownloader;
 
 import org.apache.commons.lang3.StringUtils;
 
-import twitter4j.ResponseList;
-import twitter4j.Status;
+import twitter4j.PaginationToken;
+import twitter4j.Tweet;
+import twitter4j.TweetsResponse;
 import twitter4j.TwitterException;
-import twitter4j.User;
-import utils.Twitter4jV1Helper;
+import twitter4j.TwitterV2;
+import twitter4j.UsersResponse;
+import utils.Twitter4jV2Helper;
 
 /**
  * DownloadTwitterMediaByScreenName.
@@ -28,10 +30,13 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 	public static void main(String[] args) {
 		System.out.println("■start");
 		try {
+			// Twitter4J(V2)を取得
+			TwitterV2 twitterV2 = Twitter4jV2Helper.getTwitter4jV2();
+
 			// 全ての検索対象のスクリーン名に対して実行
 			for (String screenName : SCREEN_NAME_ARRAY) {
 				if (StringUtils.isNotBlank(screenName)) {
-					downloadTwitterMediaByScreenName(screenName);
+					downloadTwitterMediaByScreenName(twitterV2, screenName);
 				}
 			}
 		} catch (Exception e) {
@@ -43,42 +48,46 @@ public class DownloadTwitterMediaByScreenName extends AbstractDownloadTwitterIma
 	/**
 	 * スクリーン名から投稿のメディアをダウンロード.
 	 *
+	 * @param twitter
 	 * @param screenName
 	 * @throws TwitterException
+	 * @throws InterruptedException 
 	 */
-	private static void downloadTwitterMediaByScreenName(String screenName) throws TwitterException {
-		// スクリーン名で検索
+	private static void downloadTwitterMediaByScreenName(TwitterV2 twitterV2, String screenName)
+			throws TwitterException, InterruptedException {
+		// スクリーン名からユーザー情報を取得
 		System.out.println("■searching : " + screenName);
-		User user = Twitter4jV1Helper.getUserByScreenName(screenName);
-		ResponseList<Status> responseList = Twitter4jV1Helper.getTimelineByUserId(user.getId(), null);
+		UsersResponse usersResponse = Twitter4jV2Helper.getUserByScreenName(twitterV2, screenName);
 
-		long minId = Long.MAX_VALUE;
+		PaginationToken paginationToken = null;
 		while (true) {
-			System.out.println("■result count : " + responseList.size());
+			// ユーザーIDからタイムラインを取得
+			TweetsResponse tweetsResponse = Twitter4jV2Helper
+					.getTimelineByUserId(twitterV2, usersResponse.getUsers().get(0).getId(), paginationToken);
+			System.out.println("■result count : " + tweetsResponse.getTweets().size());
 
 			// 全てのツイートに対して実行
-			for (Status status : responseList) {
-				System.out.println("■status : " + status.getText());
+			for (Tweet tweet : tweetsResponse.getTweets()) {
+				try {
+					System.out.println("■tweet : " + tweet.getText());
 
-				// リツイートではない場合
-				if (!status.isRetweet()) {
 					// メディアをダウンロード
-					downloadStatusMedia(screenName, status);
-				}
-
-				if (status.getId() < minId) {
-					minId = status.getId();
+					downloadTweetMedia(screenName, tweetsResponse, tweet);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 
-			// 次のページが存在する場合
-			if (!responseList.isEmpty()) {
-				// 次のページを取得
-				System.out.println("■searching next page...");
-				responseList = Twitter4jV1Helper.getTimelineByUserId(user.getId(), minId - 1);
-			} else {
+			// トークンを取得
+			paginationToken = tweetsResponse.getMeta().getNextToken();
+
+			// 次のページが存在しない場合
+			if (paginationToken == null) {
 				// 終了
 				break;
+			} else {
+				// FIXME 15分間スリープ
+				Thread.sleep(1000 * 60 * 15);
 			}
 		}
 	}

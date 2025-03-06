@@ -170,13 +170,13 @@ public class DownloadAllBookmarks {
 													.nextAlphabetic(ThreadLocalRandom.current().nextInt(5)));
 											break;
 										case 4:
-											searchForm.fill(getRandomDirectoryName());
-											break;
-										case 5:
 											searchForm.fill(getRandomHiragana());
 											break;
-										case 6:
+										case 5:
 											searchForm.fill("lang:ja");
+											break;
+										case 6:
+											searchForm.fill(getRandomDirectoryName());
 											break;
 										default:
 											searchForm.fill(RandomStringUtils.insecure().next(1));
@@ -337,7 +337,10 @@ public class DownloadAllBookmarks {
 										if (downloaded) {
 											// ブックマークから削除
 											if (REMOVE_PROCESSED_BOOKMARK) {
-												post.locator("button[data-testid='removeBookmark']").click();
+												Locator removeBookmarkLocator = post
+														.locator("button[data-testid='removeBookmark']");
+												removeBookmarkLocator.scrollIntoViewIfNeeded();
+												removeBookmarkLocator.click();
 											}
 
 											processedPostCount++;
