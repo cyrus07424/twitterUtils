@@ -39,7 +39,7 @@ public class GetUserMentions extends AbstractExample {
 			TwitterV2 twitterV2 = Twitter4jV2Helper.getTwitter4jV2(twitter);
 
 			// メンションを取得
-			TweetsResponse userMentionsResponse = twitterV2.getUserMentions(
+			TweetsResponse tweetsResponse = twitterV2.getUserMentions(
 					twitter.users().verifyCredentials().getId(),
 					null,
 					V2DefaultFields.expansions,
@@ -55,7 +55,7 @@ public class GetUserMentions extends AbstractExample {
 					V2DefaultFields.userFields);
 
 			// 全てのメンションに対して実行
-			for (Tweet tweet : userMentionsResponse.getTweets()) {
+			for (Tweet tweet : tweetsResponse.getTweets()) {
 				System.out.println("■tweet: " + tweet);
 				System.out.println("■id: " + tweet.getId());
 				System.out.println("■text: " + tweet.getText());

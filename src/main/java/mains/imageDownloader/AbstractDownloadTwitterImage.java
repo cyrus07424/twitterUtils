@@ -2,7 +2,7 @@ package mains.imageDownloader;
 
 import java.net.URISyntaxException;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.apache.http.client.utils.URIBuilder;
 
 import twitter4j.Media;
@@ -36,7 +36,7 @@ public abstract class AbstractDownloadTwitterImage {
 				int maxBitrate = 0;
 				MediaEntity.Variant useVariant = null;
 				for (MediaEntity.Variant variant : mediaEntity.getVideoVariants()) {
-					if (StringUtils.equals(variant.getContentType(), "video/mp4")) {
+					if (Strings.CS.equals(variant.getContentType(), "video/mp4")) {
 						if (maxBitrate < variant.getBitrate()) {
 							useVariant = variant;
 						}
@@ -103,7 +103,7 @@ public abstract class AbstractDownloadTwitterImage {
 					int maxBitrate = 0;
 					Variant useVariant = null;
 					for (Variant variant : video.getVariants()) {
-						if (StringUtils.equals(variant.getContentType(), "video/mp4")) {
+						if (Strings.CS.equals(variant.getContentType(), "video/mp4")) {
 							if (maxBitrate < variant.getBitRate()) {
 								useVariant = variant;
 							}

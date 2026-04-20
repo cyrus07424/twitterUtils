@@ -31,7 +31,7 @@ public class UpdateStatus extends AbstractExample {
 			try (Scanner scanner = new Scanner(System.in)) {
 				System.out.println("投稿内容を入力してください:");
 				String text = scanner.nextLine();
-				
+
 				// ツイートを投稿
 				twitter.tweets().updateStatus(new StatusUpdate(text));
 			}

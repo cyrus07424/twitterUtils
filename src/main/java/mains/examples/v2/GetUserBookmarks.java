@@ -38,16 +38,7 @@ public class GetUserBookmarks extends AbstractExample {
 			TwitterV2 twitterV2 = Twitter4jV2Helper.getTwitter4jV2(twitter);
 
 			// ブックマークを取得
-/* 
-403:The request is understood, but it has been refused. An accompanying error message will explain why. This code is used when requests are being denied due to update limits (https://support.twitter.com/articles/15364-about-twitter-limits-update-api-dm-and-following).
-{
-  "title": "Unsupported Authentication",
-  "detail": "Authenticating with OAuth 1.0a User Context is forbidden for this endpoint.  Supported authentication types are [OAuth 2.0 User Context].",
-  "type": "https://api.twitter.com/2/problems/unsupported-authentication",
-  "status": 403
-}
- */
-			TweetsResponse bookmarkResponse = twitterV2.getBookmarks(
+			TweetsResponse tweetsResponse = twitterV2.getBookmarks(
 					twitter.users().verifyCredentials().getId(),
 					null,
 					MAX_RESULTS,
@@ -59,7 +50,7 @@ public class GetUserBookmarks extends AbstractExample {
 					null);
 
 			// 全てのブックマークに対して実行
-			for (Tweet tweet : bookmarkResponse.getTweets()) {
+			for (Tweet tweet : tweetsResponse.getTweets()) {
 				System.out.println("■tweet: " + tweet.getText());
 			}
 		} catch (TwitterException e) {

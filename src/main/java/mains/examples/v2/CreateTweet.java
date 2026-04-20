@@ -38,7 +38,7 @@ public class CreateTweet extends AbstractExample {
 				String text = scanner.nextLine();
 
 				// ポストを投稿
-				CreateTweetResponse userMentionsResponse = twitterV2.createTweet(
+				CreateTweetResponse createTweetResponse = twitterV2.createTweet(
 						null,
 						null,
 						null,

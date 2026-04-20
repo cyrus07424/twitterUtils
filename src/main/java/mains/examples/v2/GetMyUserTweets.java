@@ -39,7 +39,7 @@ public class GetMyUserTweets extends AbstractExample {
 			TwitterV2 twitterV2 = Twitter4jV2Helper.getTwitter4jV2(twitter);
 
 			// 自分のタイムラインを取得
-			TweetsResponse userMentionsResponse = twitterV2.getUserTweets(
+			TweetsResponse tweetsResponse = twitterV2.getUserTweets(
 					twitter.users().verifyCredentials().getId(),
 					null,
 					null,
@@ -56,7 +56,7 @@ public class GetMyUserTweets extends AbstractExample {
 					V2DefaultFields.userFields);
 
 			// 全てのタイムラインに対して実行
-			for (Tweet tweet : userMentionsResponse.getTweets()) {
+			for (Tweet tweet : tweetsResponse.getTweets()) {
 				System.out.println("■tweet: " + tweet.getText());
 			}
 		} catch (TwitterException e) {

@@ -2,6 +2,7 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -37,8 +38,8 @@ public class FileHelper {
 	 * @param prefix
 	 * @param urlString
 	 */
-	public static void saveContent(String prefix, String urlString) {
-		saveContent(prefix, urlString, new File(String.format("./downloads")));
+	public static boolean saveContent(String prefix, String urlString) {
+		return saveContent(prefix, urlString, new File(String.format("./downloads")));
 	}
 
 	/**
@@ -47,13 +48,14 @@ public class FileHelper {
 	 * @param prefix
 	 * @param urlString
 	 * @param destinationDirectory
+	 * @return
 	 */
-	public static void saveContent(String prefix, String urlString, File destinationDirectory) {
+	public static boolean saveContent(String prefix, String urlString, File destinationDirectory) {
 		int retryCount = 0;
 		while (retryCount < MAX_RETRY_COUNT) {
 			try {
 				// 接続
-				URL url = new URL(urlString);
+				URL url = new URI(urlString).toURL();
 				URLConnection urlConnection = url.openConnection();
 
 				// 保存先ファイルを作成
@@ -74,13 +76,18 @@ public class FileHelper {
 					if (urlConnection.getLastModified() != 0) {
 						destinationFile.setLastModified(urlConnection.getLastModified());
 					}
+
+					return true;
+				} else {
+					// 保存先ファイルが既に存在する場合は成功扱いにする
+					return true;
 				}
-				break;
 			} catch (Exception e) {
 				e.printStackTrace();
 				retryCount++;
 			}
 		}
+		return false;
 	}
 
 	/**

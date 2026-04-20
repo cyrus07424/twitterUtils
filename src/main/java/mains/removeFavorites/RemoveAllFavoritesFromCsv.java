@@ -10,6 +10,7 @@ import com.orangesignal.csv.Csv;
 import com.orangesignal.csv.handlers.StringArrayListHandler;
 
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import utils.FileHelper;
 import utils.OrangeSignalHelper;
 import utils.Twitter4jV1Helper;
@@ -70,6 +71,13 @@ public class RemoveAllFavoritesFromCsv {
 					twitter.favorites().destroyFavorite(tweetId);
 				} catch (Exception e) {
 					e.printStackTrace();
+					if (e instanceof TwitterException) {
+						TwitterException twitterException = (TwitterException) e;
+						if (twitterException.exceededRateLimitation()) {
+							Thread.sleep(1000 * (twitterException.getRateLimitStatus().getSecondsUntilReset() + 5));
+							continue;
+						}
+					}
 				}
 
 				// 最後の行を削除

@@ -1,6 +1,7 @@
 package mains.examples.v2;
 
 import mains.examples.AbstractExample;
+import twitter4j.RateLimitStatus;
 import twitter4j.Tweet;
 import twitter4j.TweetsResponse;
 import twitter4j.TwitterException;
@@ -36,10 +37,10 @@ public class GetUserTweets extends AbstractExample {
 			TwitterV2 twitterV2 = Twitter4jV2Helper.getTwitter4jV2();
 
 			// 指定したタイムラインを取得
-			TweetsResponse userMentionsResponse = twitterV2.getUserTweets(
+			TweetsResponse tweetsResponse = twitterV2.getUserTweets(
 					USER_ID,
 					null,
-					null,
+					"replies,retweets",
 					V2DefaultFields.expansions,
 					MAX_RESULTS,
 					V2DefaultFields.mediaFields,
@@ -51,9 +52,14 @@ public class GetUserTweets extends AbstractExample {
 					V2DefaultFields.tweetFields,
 					null,
 					V2DefaultFields.userFields);
+			System.out.println("■userMentionsResponse: " + tweetsResponse);
+
+			// RateLimitを取得
+			RateLimitStatus rateLimitStatus = tweetsResponse.getRateLimitStatus();
+			System.out.println("■rateLimitStatus: " + rateLimitStatus);
 
 			// 全てのタイムラインに対して実行
-			for (Tweet tweet : userMentionsResponse.getTweets()) {
+			for (Tweet tweet : tweetsResponse.getTweets()) {
 				System.out.println("■tweet: " + tweet.getText());
 			}
 		} catch (TwitterException e) {
